@@ -1,5 +1,8 @@
 # Prompt Polish 0.2 — actual AI rewriting, not templates
 
+**Source repository:** [github.com/Dheeraj-Baghel/prompt-polish](https://github.com/Dheeraj-Baghel/prompt-polish) ·
+**Install package:** [v0.2.0 release ZIP](https://github.com/Dheeraj-Baghel/prompt-polish/releases/tag/v0.2.0)
+
 ## Why 0.1 did not meet the request
 
 The initial default mode copied the original prompt verbatim and appended generic
