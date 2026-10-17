@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Prompt Polish — A little clarity goes a long way</title>
+  <link rel="icon" href="icons/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="panel.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="panel.html" aria-label="Prompt Polish home"><img src="icons/mark.svg" width="32" height="32" alt=""><span>prompt<span class="brand-light">polish</span><span class="beta">BETA</span></span></a>
+      <nav class="header-actions" aria-label="Extension navigation">
+        <button id="open-tab" class="icon-button" title="Open in a full tab" aria-label="Open in a full tab">↗</button>
+        <button id="settings" class="icon-button" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m9 3-.8 2.4-2 .9-2.3-.5L2 9l1.6 1.8v2.4L2 15l1.9 3.2 2.3-.5 2 .9L9 21h6l.8-2.4 2-.9 2.3.5L22 15l-1.6-1.8v-2.4L22 9l-1.9-3.2-2.3.5-2-.9L15 3Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div class="eyebrow"><span class="green-dot"></span> BIG IDEAS. BETTER WORDS.</div>
+        <h1>A little clarity.<br><span>A better answer.</span></h1>
+        <p>Correct the English. Sharpen the request. Add detail that actually helps.</p>
+      </section>
+
+      <div class="workspace-grid">
+        <section class="card input-card" aria-labelledby="input-heading">
+          <div class="section-heading"><div><span class="step-label">01 / THE STARTING POINT</span><h2 id="input-heading">What are you working on?</h2></div><span class="mini-spark" aria-hidden="true">✳</span></div>
+          <div class="field-top"><label for="original">Your rough prompt</label><button id="use-selection" class="text-button">↙ Use selected text</button></div>
+          <textarea id="original" maxlength="12000" rows="7" placeholder="Something like: write an email asking for more time on a project…" spellcheck="true"></textarea>
+          <div class="under-input"><span>Rough is a perfectly good place to start.</span><span id="character-count">0 / 12,000</span></div>
+          <div class="examples" aria-label="Example prompts"><span>TRY ONE</span><button data-example="email">An email ↗</button><button data-example="code">A coding task ↗</button><button data-example="learn">Learn something ↗</button></div>
+
+          <details id="context-details" class="context-details">
+            <summary>Add a little context <span>optional <span aria-hidden="true">+</span></span></summary>
+            <div class="context-fields"><label for="audience">Who is it for?</label><input id="audience" maxlength="200" placeholder="e.g. my project manager, a beginner">
+              <label for="context">Anything the AI should know?</label><textarea id="context" rows="3" maxlength="3000" placeholder="Relevant facts, constraints, examples. Leave out passwords and private data."></textarea></div>
+          </details>
+
+          <div class="select-grid"><div><label for="tone">Tone</label><select id="tone"><option value="clear">Clear & direct</option><option value="friendly">Friendly</option><option value="formal">Formal</option><option value="technical">Technical</option></select></div><div><label for="format">Answer format</label><select id="format"><option value="auto">Let AI choose</option><option value="bullets">Bullet points</option><option value="steps">Step by step</option><option value="table">Table</option><option value="short">Short answer</option></select></div></div>
+
+          <fieldset class="engine-picker"><legend>Rewrite with a language model · English by default</legend><label><input type="radio" name="engine" value="local" checked><span>Chrome AI <small>On-device, if supported</small></span></label><label><input type="radio" name="engine" value="claude"><span>Claude <small>Your API key</small></span></label></fieldset>
+          <p id="engine-note" class="privacy-line" role="status">Checking Chrome AI availability…</p>
+          <button id="engine-recheck" class="text-button" hidden>Check Chrome AI again</button>
+          <button id="improve" class="button primary full" disabled><span aria-hidden="true">✦</span> <span id="improve-label">Checking Chrome AI…</span><span aria-hidden="true">→</span></button>
+          <span class="shortcut">Ctrl / ⌘ + Enter to polish</span>
+        </section>
+
+        <section class="card output-card" aria-labelledby="output-heading">
+          <div class="section-heading"><div><span class="step-label">02 / A CLEARER DIRECTION</span><h2 id="output-heading">Your polished prompt</h2></div><span id="output-mode" class="badge">READY WHEN YOU ARE</span></div>
+          <div id="empty-output" class="empty-state"><div class="paper-art" aria-hidden="true"><span class="art-spark">✦</span><div class="paper-line long"></div><div class="paper-line"></div><div class="paper-line medium"></div><div class="paper-box"></div><div class="paper-line"></div></div><h3>Rewritten. Not just repackaged.</h3><p>An AI-rewritten prompt will appear here.<br>No copied typos under generic headings.</p><div class="empty-chips"><span>Correct English</span><span>Relevant detail</span><span>Your intent</span></div></div>
+          <div id="result-area" hidden>
+            <div class="result-meta"><span id="result-meta"></span><button id="copy" class="text-button">Copy prompt ↗</button></div>
+            <label class="sr-only" for="improved">Improved prompt, editable</label><textarea id="improved" class="result-text" maxlength="24000" rows="18" spellcheck="true"></textarea>
+            <p id="stale-notice" class="inline-notice" hidden>Your starting prompt or preferences changed. Polish again before comparing.</p>
+            <div class="changes"><h3>REVIEW THE REWRITE</h3><ul id="changes"></ul><p class="muted">AI can make mistakes. These are review reminders, not a verified quality score.</p></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="card compare-card" aria-labelledby="compare-heading">
+        <div class="compare-intro"><div><span class="step-label">03 / PUT IT TO THE TEST</span><h2 id="compare-heading">Does a clearer prompt help?</h2><p>Let Claude answer both versions. You make the call.</p></div><span class="badge optional-badge">OPTIONAL</span></div>
+        <div class="compare-callout"><span class="claude-mark" aria-hidden="true">✳</span><div><strong>Original vs. polished, answered by Claude</strong><p>Same model. Separate conversations. No made-up quality scores.</p></div></div>
+        <label class="consent-label"><input type="checkbox" id="compare-consent"><span>Send both prompts to Anthropic. This makes <strong>2 billable API calls</strong> using my key. Each answer is capped at 800 output tokens.</span></label>
+        <div class="compare-actions"><button id="compare" class="button secondary" disabled>Compare with Claude <span aria-hidden="true">↗</span></button><button id="connect-claude" class="text-button">Connect your key</button><span id="provider-status" class="muted">Checking connection…</span></div>
+        <div id="comparison-results" hidden>
+          <div class="comparison-header"><p id="comparison-model" class="muted"></p><button id="copy-comparison" class="text-button">Copy comparison ↗</button></div>
+          <div class="answers-grid"><article class="answer"><span class="answer-label">THE ORIGINAL PROMPT</span><h3>Claude's answer</h3><details><summary>Prompt sent</summary><pre id="sent-original"></pre></details><div id="answer-original" class="answer-content"></div><p id="usage-original" class="usage"></p></article><article class="answer polished-answer"><span class="answer-label">THE POLISHED PROMPT</span><h3>Claude's answer</h3><details><summary>Prompt sent</summary><pre id="sent-improved"></pre></details><div id="answer-improved" class="answer-content"></div><p id="usage-improved" class="usage"></p></article></div>
+          <p class="comparison-footnote">Look for relevance, accuracy, and a usable result. Longer is not necessarily better. One pair of responses is an illustration, not a controlled benchmark. Claude has no browsing or code execution here.</p>
+        </div>
+      </section>
+      <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+      <div id="busy-bar" class="busy-bar" hidden><span class="spinner" aria-hidden="true"></span><span id="busy-label">Working…</span><button id="cancel" class="text-button">Cancel</button></div>
+    </main>
+    <footer><span><span class="green-dot"></span> No account. No tracking. Your own ideas.</span><button id="clear" class="text-button">Clear workspace</button></footer>
+  </div>
+</body>
+</html>

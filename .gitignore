@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+!.env.example
+artifacts/browser-profile/
+# Extracted copies of the packaged extension (duplicates of extension/)
+artifacts/prompt-polish-*/
+*.log
+*.zip
+.DS_Store
